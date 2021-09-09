@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 module.exports = function (app) {
   
 app.route('/api/threads/:board')
-.post(async(req, res) => {
+  .post(async(req, res) => {
    try{
      console.log(req.params, req.body)
      req.body.board = req.params.board
@@ -18,8 +18,8 @@ app.route('/api/threads/:board')
 	   res.redirect(`/b/${newThread.board}/${newThread.id}`)
      }catch(error){console.log(error)}
 	})
-	.get(async(req, res) => {
-	 const result = await db.Thread.find({board:req.params.board}).sort({bumped_on:'desc'}).lean().exec()
+  .get(async(req, res) => {
+   const result = await db.Thread.find({board:req.params.board}).sort({bumped_on:'desc'}).lean().exec()
    for(let i = 0; i<result.length;i++){
      result[i].delete_password = undefined
      result[i].reported = undefined
@@ -61,7 +61,7 @@ app.route('/api/threads/:board')
   })
   
 app.route('/api/replies/:board')
-.post(async(req, res) => {
+  .post(async(req, res) => {
    try{
 	   const newReply = new db.Reply({
 		 text: req.body.text,
@@ -88,7 +88,7 @@ app.route('/api/replies/:board')
       return acc},[])
 	  res.json(result)
   })
-.delete(async(req, res)=>{
+  .delete(async(req, res)=>{
     try{
       const searchThread = await db.Thread.findById(req.body.thread_id).exec()
 	    let trashReplyI 
